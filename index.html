@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asbah Javaid — Portfolio</title>
+    <meta property="og:image" content="https://bolt.new/static/og_default.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
+    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const { useState } = React;
+
+      // Icon components using inline SVGs
+      const Phone = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      );
+
+      const Mail = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+      );
+
+      const MapPin = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      );
+
+      const Code2 = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 16 4-4-4-4"></path><path d="m6 8-4 4 4 4"></path><path d="M9.5 13h5"></path></svg>
+      );
+
+      const GraduationCap = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.42 10.922l-19.529-11c-.912-.5-2.353-.501-3.266 0L2.04 5.822m19.474 4.8c0 1.468-.784 2.771-1.96 3.478L5.228 19.04m14.997-9.463c.261 1.477-.865 2.724-2.309 3.369M3.889 5.556v12.501A1.978 1.978 0 0 0 5.228 19.04m15.308-4.147l2.041 1.126c1.176.707 1.905 2.01 1.905 3.478V19.5a1.978 1.978 0 0 1-1.978 1.978H3.75a1.978 1.978 0 0 1-1.978-1.978v-1.472c0-1.467.73-2.771 1.905-3.478l2.082-1.164"></path></svg>
+      );
+
+      const Briefcase = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 7v-2a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path></svg>
+      );
+
+      const Heart = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      );
+
+      const Globe = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 1 0 20 14.5 14.5 0 0 1 0-20"></path><path d="M2 12h20"></path></svg>
+      );
+
+      const User = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      );
+
+      const ChevronRight = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      );
+
+      const Terminal = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+      );
+
+      const Gamepad2 = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="6" y1="12" x2="12" y2="12"></line><polyline points="9 9 9 15"></polyline><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="18" y1="16" x2="18.01" y2="16"></line><polyline points="14 12 18 8"></polyline><line x1="18" y1="12" x2="22" y2="12"></line><polyline points="18 14 22 14"></polyline></svg>
+      );
+
+      const Database = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14a9 3 0 0 0 18 0V5"></path></svg>
+      );
+
+      const Cpu = (props) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.size || 24} height={props.size || 24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+      );
+
+      const projects = [
+        {
+          title: 'Tic-Tac-Toe Game',
+          icon: Gamepad2,
+          tech: ['C++', 'OOP'],
+          description:
+            'An interactive two-player Tic-Tac-Toe game built using object-oriented principles. Features game state management, win detection logic, and a clean console-based interface.',
+        },
+        {
+          title: 'Stack-Based Text Editor',
+          icon: Terminal,
+          tech: ['C++', 'Data Structures'],
+          description:
+            'A lightweight text editor powered by a stack data structure to support undo/redo functionality. Demonstrates practical use of stacks for history management in editing workflows.',
+        },
+        {
+          title: 'Interrupt Handling',
+          icon: Cpu,
+          tech: ['C++', 'Systems Programming'],
+          description:
+            'A low-level project exploring hardware and software interrupt mechanisms. Implements interrupt service routines and signal handling in a systems programming context.',
+        },
+        {
+          title: 'Student Management System',
+          icon: Database,
+          tech: ['C++', 'OOP', 'File I/O'],
+          description:
+            'A comprehensive student record system supporting CRUD operations — add, search, update, and delete student profiles — with file persistence and a menu-driven interface.',
+        },
+      ];
+
+      const education = [
+        {
+          degree: "Bachelor's in Computer Sciences",
+          institution: 'Fatima Jinnah Women University',
+          location: 'Rawalpindi',
+          period: 'Enrolled',
+          detail: null,
+          board: null,
+        },
+        {
+          degree: 'Intermediate in Computer Science',
+          institution: 'Global College System, Harley Street',
+          location: 'Rawalpindi',
+          period: '2022 – 2024',
+          detail: 'Passed with 85.7% marks',
+          board: 'FBISE',
+        },
+        {
+          degree: 'Matriculation in Computer Science',
+          institution: 'Al Huda Model School',
+          location: 'Rawalpindi Cantt',
+          period: '2020 – 2022',
+          detail: 'Passed with 92% marks',
+          board: 'FBISE',
+        },
+      ];
+
+      const softSkills = [
+        'Team Collaboration',
+        'Effective Communication',
+        'Leadership & Initiative',
+        'Adaptability',
+        'Time Management',
+      ];
+
+      const techSkills = [
+        { label: 'C++', level: 85 },
+        { label: 'Java', level: 70 },
+        { label: 'HTML', level: 80 },
+        { label: 'OOP Concepts', level: 85 },
+        { label: 'Data Structures', level: 75 },
+        { label: 'Responsive Web Design', level: 70 },
+      ];
+
+      function SectionBlock({ title, icon: Icon, children }) {
+        return (
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #0d9488, #0f766e)' }}>
+                <Icon size={15} color="white" />
+              </div>
+              <h2 className="text-base font-black text-slate-800 tracking-widest uppercase">
+                {title}
+              </h2>
+              <div className="flex-1 h-px bg-slate-200" />
+            </div>
+            {children}
+          </div>
+        );
+      }
+
+      function App() {
+        const [activeSection, setActiveSection] = useState('about');
+
+        const navItems = [
+          { id: 'about', label: 'About', icon: User },
+          { id: 'education', label: 'Education', icon: GraduationCap },
+          { id: 'projects', label: 'Projects', icon: Briefcase },
+          { id: 'skills', label: 'Skills', icon: Code2 },
+        ];
+
+        return (
+          <div className="min-h-screen bg-slate-50">
+            {/* Hero Header */}
+            <header className="relative bg-slate-800 text-white overflow-hidden">
+              <div className="absolute inset-0 pointer-events-none">
+                <div
+                  className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10"
+                  style={{ background: 'radial-gradient(circle, #2dd4bf, transparent)', transform: 'translate(30%, -30%)' }}
+                />
+                <div
+                  className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-10"
+                  style={{ background: 'radial-gradient(circle, #0f766e, transparent)', transform: 'translate(-30%, 30%)' }}
+                />
+              </div>
+              <div className="relative max-w-5xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-shrink-0">
+                  <div
+                    className="w-32 h-32 rounded-full flex items-center justify-center text-4xl font-black text-white select-none shadow-2xl"
+                    style={{
+                      background: 'linear-gradient(135deg, #0d9488, #0f766e)',
+                      border: '4px solid rgba(45,212,191,0.3)',
+                    }}
+                  >
+                    AJ
+                  </div>
+                </div>
+                <div className="text-center md:text-left">
+                  <p className="text-teal-400 text-xs font-bold tracking-widest uppercase mb-2">
+                    Computer Science Student
+                  </p>
+                  <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-3 text-white">
+                    Asbah Javaid
+                  </h1>
+                  <p className="text-slate-300 text-base max-w-xl leading-relaxed">
+                    Dedicated CS student passionate about computational modeling, data analysis, and
+                    building practical software solutions.
+                  </p>
+                  <div className="flex flex-wrap justify-center md:justify-start gap-5 mt-5 text-sm text-slate-400">
+                    <a
+                      href="tel:03095258019"
+                      className="flex items-center gap-1.5 hover:text-teal-400 transition-colors duration-200"
+                    >
+                      <Phone size={13} />
+                      0309-5258019
+                    </a>
+                    <a
+                      href="mailto:asbahjavaid110@gmail.com"
+                      className="flex items-center gap-1.5 hover:text-teal-400 transition-colors duration-200"
+                    >
+                      <Mail size={13} />
+                      asbahjavaid110@gmail.com
+                    </a>
+                    <span className="flex items-center gap-1.5">
+                      <MapPin size={13} />
+                      Rawalpindi, Pakistan
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </header>
+
+            {/* Navigation */}
+            <nav className="sticky top-0 z-20 bg-white border-b border-slate-200 shadow-sm">
+              <div className="max-w-5xl mx-auto px-6">
+                <ul className="flex gap-0 overflow-x-auto">
+                  {navItems.map(({ id, label, icon: Icon }) => (
+                    <li key={id}>
+                      <button
+                        onClick={() => setActiveSection(id)}
+                        className={`flex items-center gap-2 px-5 py-4 text-sm font-semibold tracking-wide transition-all duration-200 whitespace-nowrap border-b-2 ${
+                          activeSection === id
+                            ? 'border-teal-500 text-teal-600 bg-teal-50'
+                            : 'border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                        }`}
+                      >
+                        <Icon size={15} />
+                        {label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </nav>
+
+            {/* Main Content */}
+            <main className="max-w-5xl mx-auto px-6 py-12">
+
+              {/* ABOUT */}
+              {activeSection === 'about' && (
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="md:col-span-2 space-y-8">
+                    <SectionBlock title="Profile" icon={User}>
+                      <p className="text-slate-600 leading-relaxed text-base">
+                        Dedicated college graduate with an advanced command of computational modeling and
+                        data analysis. Passionate about leveraging technical proficiency to solve real-world
+                        organizational challenges. Eager to contribute to a forward-thinking team where
+                        innovation and continuous learning are prioritized.
+                      </p>
+                    </SectionBlock>
+
+                    <SectionBlock title="Soft Skills" icon={Heart}>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {softSkills.map((skill) => (
+                          <li
+                            key={skill}
+                            className="flex items-center gap-2.5 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5"
+                          >
+                            <ChevronRight size={13} className="text-teal-500 flex-shrink-0" />
+                            <span className="text-slate-700 text-sm font-medium">{skill}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </SectionBlock>
+
+                    <SectionBlock title="Volunteering" icon={Heart}>
+                      <div
+                        className="rounded-2xl p-5 border"
+                        style={{ background: 'linear-gradient(135deg, #f0fdfa, #e6fffa)', borderColor: '#99f6e4' }}
+                      >
+                        <p className="font-bold text-slate-800 text-sm mb-1">
+                          Social Worker — SAM Life Savers
+                        </p>
+                        <p className="text-slate-600 text-sm leading-relaxed">
+                          Actively participated in welfare projects to address and resolve local social
+                          issues within a team-oriented environment.
+                        </p>
+                      </div>
+                    </SectionBlock>
+                  </div>
+
+                  <div className="space-y-6">
+                    <SectionBlock title="Languages" icon={Globe}>
+                      <ul className="space-y-3">
+                        {[
+                          { lang: 'English', level: 'Fluent' },
+                          { lang: 'Urdu', level: 'Fluent' },
+                        ].map(({ lang, level }) => (
+                          <li
+                            key={lang}
+                            className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5"
+                          >
+                            <span className="text-slate-700 font-semibold text-sm">{lang}</span>
+                            <span className="text-xs bg-teal-100 text-teal-700 px-2.5 py-0.5 rounded-full font-semibold">
+                              {level}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </SectionBlock>
+
+                    <SectionBlock title="Tech Stack" icon={Code2}>
+                      <div className="flex flex-wrap gap-2">
+                        {['C++', 'Java', 'HTML', 'OOP', 'Data Structures', 'Web Design'].map((t) => (
+                          <span
+                            key={t}
+                            className="text-xs font-semibold px-3 py-1.5 rounded-lg text-white"
+                            style={{ background: '#1e293b' }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </SectionBlock>
+                  </div>
+                </div>
+              )}
+
+              {/* EDUCATION */}
+              {activeSection === 'education' && (
+                <SectionBlock title="Education" icon={GraduationCap}>
+                  <div className="relative mt-2">
+                    <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-gradient-to-b from-teal-400 to-slate-200" />
+                    <div className="space-y-6 pl-12">
+                      {education.map((edu, i) => (
+                        <div key={i} className="relative group">
+                          <div
+                            className="absolute -left-[2.15rem] top-5 w-4 h-4 rounded-full border-2 border-teal-500 bg-white group-hover:bg-teal-500 transition-colors duration-200"
+                          />
+                          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
+                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
+                              <h3 className="font-bold text-slate-800 text-base">{edu.degree}</h3>
+                              <span
+                                className="flex-shrink-0 text-xs font-bold px-3 py-1 rounded-full text-white"
+                                style={{ background: 'linear-gradient(90deg, #0d9488, #0f766e)' }}
+                              >
+                                {edu.period}
+                              </span>
+                            </div>
+                            <p className="text-slate-500 text-sm">
+                              {edu.institution}, {edu.location}
+                            </p>
+                            {edu.detail && (
+                              <p className="text-slate-700 text-sm mt-3 font-medium">
+                                {edu.detail}
+                                {edu.board && (
+                                  <span className="ml-2 text-xs text-teal-600 font-semibold bg-teal-50 px-2 py-0.5 rounded-md">
+                                    {edu.board}
+                                  </span>
+                                )}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </SectionBlock>
+              )}
+
+              {/* PROJECTS */}
+              {activeSection === 'projects' && (
+                <SectionBlock title="Academic Projects" icon={Briefcase}>
+                  <div className="grid md:grid-cols-2 gap-5">
+                    {projects.map((project) => {
+                      const Icon = project.icon;
+                      return (
+                        <div
+                          key={project.title}
+                          className="group bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default"
+                        >
+                          <div className="flex items-start gap-4 mb-4">
+                            <div
+                              className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
+                              style={{ background: 'linear-gradient(135deg, #ccfbf1, #99f6e4)', border: '1px solid #5eead4' }}
+                            >
+                              <Icon size={20} className="text-teal-700" />
+                            </div>
+                            <div>
+                              <h3 className="font-bold text-slate-800 text-base leading-tight">
+                                {project.title}
+                              </h3>
+                              <div className="flex flex-wrap gap-1.5 mt-1.5">
+                                {project.tech.map((t) => (
+                                  <span
+                                    key={t}
+                                    className="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-md font-semibold"
+                                  >
+                                    {t}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-slate-600 text-sm leading-relaxed">{project.description}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </SectionBlock>
+              )}
+
+              {/* SKILLS */}
+              {activeSection === 'skills' && (
+                <div className="grid md:grid-cols-2 gap-8">
+                  <SectionBlock title="Technical Skills" icon={Code2}>
+                    <div className="space-y-5">
+                      {techSkills.map(({ label, level }) => (
+                        <div key={label}>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-semibold text-slate-700">{label}</span>
+                            <span className="text-xs text-slate-500 font-medium">{level}%</span>
+                          </div>
+                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full"
+                              style={{
+                                width: `${level}%`,
+                                background: 'linear-gradient(90deg, #0d9488, #2dd4bf)',
+                              }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </SectionBlock>
+
+                  <SectionBlock title="Soft Skills" icon={Heart}>
+                    <ul className="space-y-2.5">
+                      {softSkills.map((skill, i) => (
+                        <li
+                          key={skill}
+                          className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3 shadow-sm hover:shadow-md transition-shadow duration-200"
+                        >
+                          <span
+                            className="w-6 h-6 rounded-full text-white text-xs flex items-center justify-center font-bold flex-shrink-0"
+                            style={{ background: 'linear-gradient(135deg, #0d9488, #0f766e)' }}
+                          >
+                            {i + 1}
+                          </span>
+                          <span className="text-slate-700 text-sm font-medium">{skill}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </SectionBlock>
+                </div>
+              )}
+            </main>
+
+            {/* Footer */}
+            <footer className="mt-16 border-t border-slate-200 bg-white">
+              <div className="max-w-5xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-500">
+                <span className="font-medium">
+                  &copy; {new Date().getFullYear()} Asbah Javaid
+                </span>
+                <a
+                  href="mailto:asbahjavaid110@gmail.com"
+                  className="flex items-center gap-1.5 hover:text-teal-600 transition-colors duration-200"
+                >
+                  <Mail size={13} />
+                  asbahjavaid110@gmail.com
+                </a>
+              </div>
+            </footer>
+          </div>
+        );
+      }
+
+      // Render the app
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
